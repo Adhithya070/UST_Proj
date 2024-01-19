@@ -1,0 +1,16 @@
+[
+ {"EmpID":19001,"EmpName":"Alex Thomas","Dept":"Sales","Email":"Alex.Thomas@Gmail.com"},
+ {"EmpID":19002,"EmpName":"Shobha Anand","Dept":"Training","Email":"Shobha.Anand@Gmail.com"},
+ {"EmpID":19003,"EmpName":"Simran Joseph","Dept":"Research","Email":"Simran.Joseph@Gmail.com"},
+ {"EmpID":19004,"EmpName":"Manish George","Dept":"Sales","Email":"Manish.George@Gmail.com"},
+ {"EmpID":19005,"EmpName":"Kumkum Nath","Dept":"Marketing","Email":"Kumkum.Nath@Gmail.com"},
+ {"EmpID":19006,"EmpName":"Mareena James","Dept":"Research","Email":"Mareena.James@Gmail.com"},
+ {"EmpID":19007,"EmpName":"Jackson Ninan","Dept":"Sales","Email":"Jackson.Ninan@Gmail.com"},
+ {"EmpID":19008,"EmpName":"Anil George","Dept":"Training","Email":"Anil.George@Gmail.com"},
+ {"EmpID":19009,"EmpName":"Shibu Francis","Dept":"Human Resources","Email":"Shibu.Francis@Gmail.com"},
+ {"EmpID":19010,"EmpName":"Reesa Susan","Dept":"Sales","Email":"Reesa.Susan@Gmail.com"},
+ {"EmpID":19011,"EmpName":"Pushpa Ipe","Dept":"Human Resources","Email":"Pushpa.Ipe@Gmail.com"},
+ {"EmpID":19012,"EmpName":"Manoj George","Dept":"Marketing","Email":"Manoj.George@Gmail.com"},
+ {"EmpID":19013,"EmpName":"Suma Susan Dan","Dept":"Training","Email":"Suma.Dan@Gmail.com"},
+ {"EmpID":19014,"EmpName":"Alphonsa George","Dept":"Human Resources","Email":"Alphonsa.George@Gmail.com"}
+]

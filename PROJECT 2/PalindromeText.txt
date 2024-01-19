@@ -1,0 +1,11 @@
+Palindrome List
+============
+malayalam
+racecar
+amma
+malayalam
+civic
+radar
+rotor
+madam
+refer

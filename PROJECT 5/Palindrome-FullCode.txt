@@ -1,0 +1,156 @@
+import csv
+import os.path
+import shutil
+import tkinter as tk
+
+from docx import Document
+from tkinter import filedialog
+from tkinter import ttk
+from tkinter import messagebox
+
+# <root> is the main window object.
+root = tk.Tk()
+root.geometry("440x400")  # size of the window
+root.title('Palindrome Check') #Heading
+root.resizable(0, 0)  # no maximize button
+
+#Variable / Name declaration for 3 artifacts to be created - txt, docx, csv
+txt_file = 'PalindromeText.txt'
+doc_file = 'PalindromeDoc.docx'
+csv_file = 'PalindromeCSV.csv'
+
+# create the txt file if it doesn't exist with default contents.
+if not os.path.exists(txt_file):
+    with open(txt_file, 'w', newline='') as fp:
+        fp.write('PALINDROME LIST' + '\n' + '=================' + '\n')
+
+# create the docx file if it doesn't exist with default contents.
+if not os.path.exists(doc_file):
+    document = Document()
+    document.add_heading('PALINDROME CHECK', 0)
+    document.save(doc_file)
+
+# create the csv file if it doesn't exist with default contents.
+if not os.path.exists(csv_file):
+    with open(csv_file, 'w', newline='') as fp:
+        writer = csv.writer(fp)
+        writer.writerow(['Given String', 'Reversed String'])
+
+# FUNCTIONS
+
+#Verify the user inputs whether it's a valid alphanumeric character"""
+def verify_user_entry(event):
+    reverse_label.config(text="")
+    if not event.char.isalnum():
+        given_string_entry.delete(0, tk.END)
+        given_string_entry.insert(0, given_string_entry.get()[:-1])
+
+#String Reverse when given string is not empty
+def show_reverse():
+    given_str = given_string_entry.get()
+    if len(given_str.strip()) > 0:
+        result_str = given_str[::-1]
+        reverse_label.config(text=result_str)
+        record_data(privilege.get())
+    else:
+        messagebox.showwarning("Empty", "Warning!!Given string is empty.")
+
+#Record data when the selected preference is Administrator"""
+def record_data(user_type):
+    if user_type == 1:
+        given_str = given_string_entry.get()
+        reversed_str = given_str[::-1]
+        if given_str == reversed_str:  # palindrome check
+            """Write to txt"""
+            with open(txt_file, 'a', newline='') as fp:
+                fp.write(given_str + '\n')
+            """Write to doc"""
+            doc = Document(doc_file)
+            doc.add_paragraph(given_str).bold = True
+            doc.save(doc_file)
+        else:
+            """Write to xls"""
+            with open(csv_file, 'a', newline='') as fp:
+                csv_writer = csv.writer(fp)
+                csv_writer.writerow([given_str, reversed_str])
+
+#Clear entry when radio button toggled
+def clear_all():
+    given_string_entry.delete(0, tk.END)
+    reverse_label.config(text="")
+
+#Download doc and xls
+def download_doc():
+    result_doc = filedialog.asksaveasfile(
+        mode="w",
+        defaultextension=".docx",
+        filetypes=(("DOCX", "*.docx"), ("All files", "*"))
+    )
+    if result_doc is None:
+        return
+    name = result_doc.name
+    basename = os.path.basename(name)
+    path = os.path.dirname(name)
+    target = os.path.join(path, basename)
+    shutil.copyfile(doc_file, target)
+
+
+def download_csv():
+    result_csv = filedialog.asksaveasfile(
+        mode="w",
+        defaultextension=".csv",
+        filetypes=(("CSV", "*.csv"), ("All files", "*"))
+    )
+    if result_csv is None:
+        return
+    name = result_csv.name
+    basename = os.path.basename(name)
+    path = os.path.dirname(name)
+    target = os.path.join(path, basename)
+    shutil.copyfile(csv_file, target)
+
+
+# UI Components
+
+"""Heading"""
+pal_label = ttk.Label(root, text="PALINDROME CHECK")
+pal_label.grid(column=0, row=0, sticky=tk.W, padx=20, pady=20, columnspan=2)
+
+"""Two Radio Buttons Creation"""
+privilege = tk.IntVar()
+
+admin_rdo_btn = ttk.Radiobutton(root,
+                                text="Administrator", variable=privilege, value=1,
+                                command=clear_all)
+admin_rdo_btn.grid(column=0, row=1, sticky=tk.W, padx=20, pady=20)
+user_rdo_btn = ttk.Radiobutton(root, text="User", variable=privilege, value=0,
+                               command=clear_all)
+user_rdo_btn.grid(column=1, row=1, sticky=tk.W, padx=20, pady=20)
+
+"""Others"""
+given_string_label = ttk.Label(root, text="Given String")
+given_string_label.grid(column=0, row=2, sticky=tk.W, padx=5, pady=5)
+
+given_string_entry = ttk.Entry(root)
+given_string_entry.grid(column=1, row=2, sticky=tk.W, padx=5, pady=5)
+given_string_entry.bind('<KeyRelease>', verify_user_entry)
+
+reverse_btn = ttk.Button(root, text='Reverse', command=show_reverse)
+reverse_btn.grid(column=2, row=2, sticky=tk.W, padx=5, pady=5)
+
+result_label = ttk.Label(root, text="Reversed String:")
+result_label.grid(column=0, row=3, sticky=tk.W, padx=5, pady=5)
+
+reverse_label = ttk.Label(root, text="", font='Helvetica 12 bold')
+reverse_label.grid(column=1, row=3, sticky=tk.W, padx=5, pady=5, columnspan=3)
+
+download_label = ttk.Label(root, text="DOWNLOAD")
+download_label.grid(column=0, row=4, sticky=tk.W, padx=5, pady=5)
+
+download_doc_btn = ttk.Button(root, text='Doc', command=download_doc)
+download_doc_btn.grid(column=1, row=4, sticky=tk.W, padx=5, pady=5)
+
+download_csv_btn = ttk.Button(root, text='Csv', command=download_csv)
+download_csv_btn.grid(column=2, row=4, sticky=tk.W, padx=5, pady=5)
+
+root.mainloop()
